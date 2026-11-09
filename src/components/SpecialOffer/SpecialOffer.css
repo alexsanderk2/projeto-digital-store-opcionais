@@ -1,0 +1,106 @@
+.special-offer {
+  background-color: var(--white);
+  padding: 80px 0;
+}
+
+.special-offer__content {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  align-items: center;
+  gap: 60px;
+}
+
+.special-offer__image {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+/* Círculo lilás atrás do tênis */
+.special-offer__image::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 80%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: linear-gradient(180deg, rgba(76, 78, 255, 0.16) 0%, rgba(255, 255, 255, 0) 100%);
+}
+
+.special-offer__image img {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+}
+
+.special-offer__subtitle {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 12px;
+}
+
+.special-offer__title {
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--dark-gray-2);
+  margin-bottom: 20px;
+}
+
+.special-offer__description {
+  font-size: 16px;
+  line-height: 28px;
+  color: var(--dark-gray-2);
+  margin-bottom: 30px;
+}
+
+.special-offer__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 200px;
+  height: 40px;
+  border-radius: 8px;
+  background-color: var(--primary);
+  color: var(--white);
+  font-size: 14px;
+  font-weight: 700;
+  transition: background-color 0.2s;
+}
+
+.special-offer__button:hover {
+  background-color: var(--tertiary);
+}
+
+@media (max-width: 900px) {
+  .special-offer {
+    padding: 40px 0;
+  }
+
+  .special-offer__content {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .special-offer__image img {
+    max-width: 280px;
+  }
+
+  .special-offer__subtitle {
+    font-size: 12px;
+    color: var(--warning);
+  }
+
+  .special-offer__title {
+    font-size: 28px;
+  }
+
+  .special-offer__description {
+    font-size: 14px;
+    line-height: 22px;
+  }
+}

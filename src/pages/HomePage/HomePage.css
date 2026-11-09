@@ -1,25 +1,8 @@
-.home__gallery {
-  margin: 0 auto;
+.home .section:last-of-type {
+  margin-bottom: 80px;
 }
 
-.home__collections {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-}
-
-.home__collections img {
-  width: 100%;
-  border-radius: 4px;
-  transition: transform 0.2s;
-}
-
-.home__collections img:hover {
-  transform: translateY(-4px);
-}
-
-@media (max-width: 768px) {
-  .home__collections {
-    grid-template-columns: 1fr;
-  }
+/* A oferta especial encosta no rodapé, como no layout */
+.home {
+  margin-bottom: -80px;
 }

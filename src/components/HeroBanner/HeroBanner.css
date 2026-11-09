@@ -1,0 +1,160 @@
+.hero {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--light-gray-3);
+  padding-bottom: 50px;
+}
+
+.hero__track {
+  display: flex;
+  transition: transform 0.6s ease-in-out;
+}
+
+.hero__slide {
+  flex: 0 0 100%;
+}
+
+.hero__content {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  align-items: center;
+  gap: 40px;
+  min-height: 560px;
+}
+
+.hero__subtitle {
+  display: block;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--warning);
+  margin-bottom: 20px;
+}
+
+.hero__title {
+  font-size: 64px;
+  font-weight: 800;
+  line-height: 1.1;
+  color: var(--dark-gray);
+  margin-bottom: 20px;
+}
+
+.hero__description {
+  font-size: 18px;
+  line-height: 34px;
+  color: var(--dark-gray-2);
+  max-width: 510px;
+  margin-bottom: 40px;
+}
+
+.hero__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 220px;
+  height: 48px;
+  border-radius: 8px;
+  background-color: var(--primary);
+  color: var(--white);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.75px;
+  transition: background-color 0.2s;
+}
+
+.hero__button:hover {
+  background-color: var(--tertiary);
+}
+
+.hero__image {
+  position: relative;
+}
+
+.hero__image img {
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+  margin-left: auto;
+  transform: rotate(-12deg);
+  filter: drop-shadow(0 30px 25px rgba(0, 0, 0, 0.15));
+}
+
+/* Pontilhado decorativo do layout */
+.hero__ornament {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background-image: radial-gradient(var(--warning) 1.6px, transparent 1.6px);
+  background-size: 14px 14px;
+  opacity: 0.35;
+}
+
+.hero__dots {
+  position: absolute;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+}
+
+.hero__dot {
+  width: 12px;
+  height: 12px;
+  border: none;
+  border-radius: 50%;
+  background-color: var(--light-gray-2);
+  padding: 0;
+  transition: background-color 0.2s;
+}
+
+.hero__dot--active {
+  background-color: var(--primary);
+}
+
+@media (max-width: 900px) {
+  .hero__content {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 10px;
+    min-height: auto;
+    padding-top: 30px;
+  }
+
+  .hero__image {
+    order: -1;
+  }
+
+  .hero__image img {
+    max-width: 320px;
+    margin: 0 auto;
+  }
+
+  .hero__ornament {
+    width: 90px;
+    height: 90px;
+  }
+
+  .hero__subtitle {
+    font-size: 12px;
+    color: var(--primary);
+    margin-bottom: 10px;
+  }
+
+  .hero__title {
+    font-size: 40px;
+  }
+
+  .hero__description {
+    font-size: 14px;
+    line-height: 22px;
+    margin: 0 auto 30px;
+  }
+
+  .hero__button {
+    width: 100%;
+    max-width: 400px;
+  }
+}

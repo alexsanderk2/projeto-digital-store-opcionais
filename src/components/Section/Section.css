@@ -34,3 +34,17 @@
 .section__link:hover {
   text-decoration: underline;
 }
+
+@media (max-width: 600px) {
+  .section {
+    margin-top: 40px;
+  }
+
+  .section__title {
+    font-size: 18px;
+  }
+
+  .section__link {
+    font-size: 14px;
+  }
+}

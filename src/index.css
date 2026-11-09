@@ -41,6 +41,10 @@ button {
   cursor: pointer;
 }
 
+main {
+  padding-bottom: 80px;
+}
+
 img {
   display: block;
   max-width: 100%;
