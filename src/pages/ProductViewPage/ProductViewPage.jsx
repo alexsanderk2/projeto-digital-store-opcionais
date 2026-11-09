@@ -19,6 +19,9 @@ const SIZES = {
 
 const COLORS = ['#6FEEFF', '#FF6969', '#5E5E5E', '#6D70B7'];
 
+// Fundos em tons pastel das imagens, como no layout
+const IMAGE_BACKGROUNDS = ['#E2E3FF', '#FFE8BC', '#FFC0BC', '#DEC699', '#E8DFCF'];
+
 const ProductViewPage = () => {
   const { id } = useParams();
 
@@ -52,15 +55,18 @@ const ProductViewPage = () => {
     <Layout>
       <div className="container">
         <p className="product-view__breadcrumb">
-          <Link to="/">Home</Link> / <Link to="/products">Produtos</Link> / {product.category} /{' '}
-          <strong>{product.name}</strong>
+          <Link to="/"><strong>Home</strong></Link> / <Link to="/products">Produtos</Link> / {product.category} /{' '}
+          {product.name}
         </p>
 
         <div className="product-view">
           <Gallery
             key={product.id}
             className="product-view__gallery"
-            images={product.images.map((src) => ({ src }))}
+            images={product.images.map((src, i) => ({
+              src,
+              background: IMAGE_BACKGROUNDS[i % IMAGE_BACKGROUNDS.length],
+            }))}
             showThumbs
             width="700"
             height="570"
@@ -90,7 +96,7 @@ const ProductViewPage = () => {
           </BuyBox>
         </div>
 
-        <Section title="Produtos recomendados" titleAlign="left" link={{ text: 'Ver todos', href: '/products' }}>
+        <Section title="Produtos Relacionados" titleAlign="left" link={{ text: 'Ver todos', href: '/products' }}>
           <ProductListing products={related} />
         </Section>
       </div>

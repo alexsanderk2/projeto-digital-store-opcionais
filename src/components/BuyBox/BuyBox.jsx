@@ -10,6 +10,35 @@ const StarIcon = () => (
   </svg>
 );
 
+const RatingStars = ({ value }) => {
+  const filled = Math.round(Number(value));
+  return (
+    <span className="buy-box__star-row" aria-label={`${value} de 5 estrelas`}>
+      {Array.from({ length: 5 }, (_, i) => (
+        <svg key={i} width="14" height="14" viewBox="0 0 16 16" aria-hidden="true">
+          <path
+            d="M8.15 1.23L10 5.65l4.73.41c.33.03.46.44.21.66l-3.59 3.14 1.08 4.68c.07.32-.27.58-.56.4L7.81 12.47l-4.07 2.48c-.28.17-.63-.08-.56-.4l1.08-4.68L.67 6.72c-.25-.22-.12-.63.21-.66l4.73-.41 1.85-4.42c.13-.31.56-.31.69 0z"
+            fill={i < filled ? 'var(--warning)' : 'none'}
+            stroke="var(--warning)"
+          />
+        </svg>
+      ))}
+    </span>
+  );
+};
+
+// "R$ 219,00" com o símbolo e os centavos menores, como no layout
+const PriceTag = ({ value }) => {
+  const [integer, cents] = Number(value).toFixed(2).split('.');
+  const formattedInteger = Number(integer).toLocaleString('pt-BR');
+  return (
+    <span className="buy-box__price" aria-label={formatPrice(value)}>
+      <small>R$</small> {formattedInteger}
+      <small>,{cents}</small>
+    </span>
+  );
+};
+
 const BuyBox = ({ name, reference, stars, rating, price, priceDiscount, description, children }) => {
   const hasDiscount = priceDiscount !== undefined && priceDiscount !== null;
 
@@ -19,6 +48,7 @@ const BuyBox = ({ name, reference, stars, rating, price, priceDiscount, descript
       <p className="buy-box__reference">{reference}</p>
 
       <div className="buy-box__rating">
+        <RatingStars value={stars} />
         <span className="buy-box__stars">
           {stars} <StarIcon />
         </span>
@@ -26,10 +56,8 @@ const BuyBox = ({ name, reference, stars, rating, price, priceDiscount, descript
       </div>
 
       <div className="buy-box__prices">
-        {hasDiscount && <span className="buy-box__price">{formatPrice(priceDiscount)}</span>}
-        <span className={hasDiscount ? 'buy-box__price buy-box__price--old' : 'buy-box__price'}>
-          {formatPrice(price)}
-        </span>
+        <PriceTag value={hasDiscount ? priceDiscount : price} />
+        {hasDiscount && <span className="buy-box__price--old">{formatPrice(price)}</span>}
       </div>
 
       <div className="buy-box__description">

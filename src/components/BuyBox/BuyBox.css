@@ -46,10 +46,20 @@
   gap: 10px;
 }
 
+.buy-box__star-row {
+  display: inline-flex;
+  gap: 2px;
+}
+
 .buy-box__price {
   font-size: 32px;
   font-weight: 700;
   color: var(--dark-gray-2);
+}
+
+.buy-box__price small {
+  font-size: 16px;
+  font-weight: 500;
 }
 
 .buy-box__price--old {

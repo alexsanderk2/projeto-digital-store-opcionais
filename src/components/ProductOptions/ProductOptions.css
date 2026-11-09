@@ -42,4 +42,7 @@
 
 .product-options__item--text.product-options__item--selected {
   outline: none;
+  background-color: var(--primary);
+  border-color: var(--primary);
+  color: var(--white);
 }

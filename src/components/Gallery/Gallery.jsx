@@ -38,7 +38,7 @@ const Gallery = ({ className = '', width, height, radius, showThumbs = false, im
               src={image.src}
               alt={`Imagem ${index + 1}`}
               className="gallery__image"
-              style={{ objectFit: fit }}
+              style={{ objectFit: fit, backgroundColor: image.background }}
               aria-hidden={index !== current}
             />
           ))}
@@ -71,7 +71,7 @@ const Gallery = ({ className = '', width, height, radius, showThumbs = false, im
               type="button"
               key={image.src + index}
               className={`gallery__thumb ${index === current ? 'gallery__thumb--active' : ''}`}
-              style={{ borderRadius: r }}
+              style={{ borderRadius: r, backgroundColor: image.background }}
               onClick={() => setCurrent(index)}
               aria-label={`Ver imagem ${index + 1}`}
             >
