@@ -1,12 +1,49 @@
-# Digital Store
+# Digital Store (opcionais)
 
 Projeto de e-commerce **Drip Store / Digital Store** desenvolvido em React como parte do curso da Digital College, seguindo os requisitos de [projeto-digital-store](https://github.com/digitalcollegebr/projeto-digital-store) e o layout do Figma.
+
+Esta versão parte da entrega principal ([alexsanderk2/projeto-digital-store](https://github.com/alexsanderk2/projeto-digital-store)) e adiciona as recomendações opcionais.
+
+**Deploy:** _link em breve_
+
+## Opcionais entregues
+
+| Recomendação            | Como foi atendida |
+| ----------------------- | ----------------- |
+| Deploy                  | Publicado na Vercel (`vercel.json` com rewrite de SPA para as rotas do React Router). |
+| README                  | Este documento, com instruções para rodar, rotas, estrutura e detalhes da API. |
+| Pull Request            | As alterações deste README foram integradas via Pull Request. |
+| Funcionalidades visuais | Ordenar e Filtrar funcionam de verdade: ordenação por preço e filtros por marca, categoria, gênero e disponibilidade. |
+| API                     | Os produtos vêm da [DummyJSON](https://dummyjson.com/docs/products) em tempo real. |
+
+## API
+
+Os produtos são carregados da API pública [DummyJSON](https://dummyjson.com), sem necessidade de chave.
+
+| Uso                     | Endpoint |
+| ----------------------- | -------- |
+| Listagem e Home         | `GET /products/category/{categoria}` para cada categoria da loja |
+| Página do produto       | `GET /products/{id}` |
+| Produtos recomendados   | `GET /products/category/{categoria do produto}` |
+
+Categorias usadas: `mens-shoes`, `womens-shoes`, `mens-shirts`, `tops`, `womens-bags` e `sunglasses` (30 produtos no total).
+
+Detalhes da implementação:
+
+- `src/services/api.js` faz as requisições e converte os dados da API para o formato usado pelos componentes (nome, imagem, preço, desconto, marca, categoria etc.).
+- Os preços da API estão em dólar e são convertidos para real com cotação fixa de **R$ 5,50**.
+- O desconto só é exibido quando a API informa 10% ou mais.
+- `src/hooks/useFetch.js` controla carregamento, erro e cancelamento das requisições (`AbortController`).
+- Enquanto carrega, as páginas mostram um indicador; em caso de erro, exibem uma mensagem com o botão **Tentar novamente**.
+- As opções dos filtros são montadas a partir dos próprios produtos retornados.
 
 ## Tecnologias
 
 - [React 18](https://react.dev/)
 - [Vite](https://vitejs.dev/)
 - [React Router DOM](https://reactrouter.com/)
+- [DummyJSON](https://dummyjson.com/) (API de produtos)
+- [Vercel](https://vercel.com/) (deploy)
 - CSS puro com variáveis (paleta de cores do projeto)
 
 ## Como executar
@@ -49,14 +86,16 @@ src/
 │   ├── ProductCard/
 │   ├── ProductListing/
 │   ├── ProductOptions/
-│   └── Section/
-├── data/                   # Produtos mockados
+│   ├── Section/
+│   └── Status/             # Carregando / erro
+├── hooks/                  # useFetch
 ├── pages/
 │   ├── HomePage/
 │   ├── Layout/
 │   ├── NotFoundPage/
 │   ├── ProductListingPage/
 │   └── ProductViewPage/
+├── services/               # Integração com a API
 ├── utils/
 ├── App.jsx                 # Definição das rotas
 └── main.jsx
