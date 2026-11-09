@@ -46,7 +46,27 @@
 }
 
 @media (max-width: 600px) {
+  .footer {
+    padding-top: 40px;
+  }
+
   .footer__content {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px 20px;
+  }
+
+  .footer__brand,
+  .footer__content > :last-child {
+    grid-column: 1 / -1;
+  }
+
+  .footer__brand img {
+    width: 160px;
+    height: auto;
+  }
+
+  .footer__description {
+    margin: 20px 0;
+    font-size: 14px;
   }
 }

@@ -42,7 +42,7 @@ const Footer = () => {
             <Logo variant="white" />
             <p className="footer__description">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-              incididunt ut labore et dolore magna aliqua.
+              incididunt ut labore et dolore.
             </p>
             <div className="footer__socials">
               {socials.map((social) => (

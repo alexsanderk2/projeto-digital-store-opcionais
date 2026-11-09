@@ -38,8 +38,15 @@
   border-radius: 29px;
 }
 
+.product-card__category {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--light-gray);
+  margin-bottom: 4px;
+}
+
 .product-card__name {
-  font-size: 18px;
+  font-size: 20px;
   color: var(--dark-gray-2);
   margin-bottom: 6px;
 }
@@ -65,8 +72,15 @@
 }
 
 @media (max-width: 600px) {
+  .product-card__category {
+    font-size: 10px;
+  }
+
   .product-card__name {
-    font-size: 15px;
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .product-card__price {

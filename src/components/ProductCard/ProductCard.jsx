@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { formatPrice } from '../../utils/formatPrice';
 import './ProductCard.css';
 
-const ProductCard = ({ id, image, name, price, priceDiscount }) => {
+const ProductCard = ({ id, image, category, name, price, priceDiscount }) => {
   const hasDiscount = priceDiscount !== undefined && priceDiscount !== null;
   const content = (
     <>
@@ -14,6 +14,7 @@ const ProductCard = ({ id, image, name, price, priceDiscount }) => {
         )}
         <img src={image} alt={name} width={292} height={321} />
       </div>
+      {category && <p className="product-card__category">{category}</p>}
       <p className="product-card__name">{name}</p>
       <div className="product-card__prices">
         <span className={hasDiscount ? 'product-card__price product-card__price--old' : 'product-card__price'}>
