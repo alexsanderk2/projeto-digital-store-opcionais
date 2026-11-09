@@ -1,7 +1,6 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import Layout from '../Layout/Layout';
-import Section from '../../components/Section/Section';
 import ProductListing from '../../components/ProductListing/ProductListing';
 import FilterGroup from '../../components/FilterGroup/FilterGroup';
 import { Loading, ErrorMessage } from '../../components/Status/Status';
@@ -14,17 +13,37 @@ const normalize = (text) =>
 
 const finalPrice = (product) => product.priceDiscount ?? product.price;
 
+const SORTERS = {
+  relevantes: (a, b) => b.stars - a.stars,
+  menor: (a, b) => finalPrice(a) - finalPrice(b),
+  maior: (a, b) => finalPrice(b) - finalPrice(a),
+};
+
 const uniqueOptions = (products, key) =>
   [...new Set(products.map((p) => p[key]))].sort((a, b) => a.localeCompare(b)).map((text) => ({ text }));
 
 const initialFilters = { brand: [], category: [], gender: [], availability: [] };
 
+const FilterIcon = () => (
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M3 5h18l-7 8v6l-4 2v-8L3 5z" />
+  </svg>
+);
+
 const ProductListingPage = () => {
   const [searchParams] = useSearchParams();
   const search = searchParams.get('filter') ?? '';
-  const [order, setOrder] = useState('menor');
+  const [order, setOrder] = useState('relevantes');
   const [filters, setFilters] = useState(initialFilters);
+  const [filtersOpen, setFiltersOpen] = useState(false);
   const { data: products, loading, error, retry } = useFetch(getProducts);
+
+  useEffect(() => {
+    document.body.style.overflow = filtersOpen ? 'hidden' : '';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [filtersOpen]);
 
   const options = useMemo(() => {
     const list = products ?? [];
@@ -53,44 +72,65 @@ const ProductListingPage = () => {
         ([key, values]) => values.length === 0 || values.includes(product[key])
       );
     });
-
-    return filtered.sort((a, b) =>
-      order === 'menor' ? finalPrice(a) - finalPrice(b) : finalPrice(b) - finalPrice(a)
-    );
+    return filtered.sort(SORTERS[order]);
   }, [products, search, filters, order]);
 
-  const title = `${search ? `Resultados para "${search}" - ` : ''}${result.length} produto${
-    result.length === 1 ? '' : 's'
-  }`;
-
-  const renderContent = () => {
-    if (loading) return <Loading text="Carregando produtos..." />;
-    if (error) return <ErrorMessage text="Não foi possível carregar os produtos." onRetry={retry} />;
-    return (
-      <Section title={title} titleAlign="left">
-        {result.length ? (
-          <ProductListing products={result} columns={3} />
-        ) : (
-          <p className="listing__empty">Nenhum produto encontrado.</p>
-        )}
-      </Section>
-    );
-  };
+  const activeFilters = Object.values(filters).reduce((total, list) => total + list.length, 0);
 
   return (
     <Layout>
       <div className="container listing">
-        <aside className="listing__aside">
-          <label className="listing__order">
-            <span>Ordenar por</span>
-            <select value={order} onChange={(e) => setOrder(e.target.value)}>
-              <option value="menor">Menor preço</option>
-              <option value="maior">Maior preço</option>
-            </select>
-          </label>
+        <div className="listing__toolbar">
+          <p className="listing__results">
+            {search ? (
+              <>
+                <strong>Resultados para &quot;{search}&quot;</strong> -{' '}
+              </>
+            ) : (
+              <strong>Todos os produtos - </strong>
+            )}
+            {loading ? '...' : `${result.length} produto${result.length === 1 ? '' : 's'}`}
+          </p>
 
-          <div className="listing__filters">
-            <h3 className="listing__filters-title">Filtrar por</h3>
+          <div className="listing__toolbar-actions">
+            <label className="listing__order">
+              <span>Ordenar por:</span>
+              <select value={order} onChange={(e) => setOrder(e.target.value)}>
+                <option value="relevantes">mais relevantes</option>
+                <option value="menor">menor preço</option>
+                <option value="maior">maior preço</option>
+              </select>
+            </label>
+            <button
+              type="button"
+              className="listing__filter-button"
+              onClick={() => setFiltersOpen(true)}
+              aria-label="Abrir filtros"
+            >
+              <FilterIcon />
+              {activeFilters > 0 && <span className="listing__filter-count">{activeFilters}</span>}
+            </button>
+          </div>
+        </div>
+
+        <div className="listing__body">
+          <div
+            className={`listing__overlay ${filtersOpen ? 'listing__overlay--open' : ''}`}
+            onClick={() => setFiltersOpen(false)}
+            aria-hidden="true"
+          />
+          <aside className={`listing__filters ${filtersOpen ? 'listing__filters--open' : ''}`}>
+            <div className="listing__filters-header">
+              <h3 className="listing__filters-title">Filtrar por</h3>
+              <button
+                type="button"
+                className="listing__filters-close"
+                onClick={() => setFiltersOpen(false)}
+                aria-label="Fechar filtros"
+              >
+                ×
+              </button>
+            </div>
             <hr />
             <FilterGroup
               title="Marca"
@@ -123,10 +163,18 @@ const ProductListingPage = () => {
             <button type="button" className="listing__clear" onClick={() => setFilters(initialFilters)}>
               Limpar filtros
             </button>
-          </div>
-        </aside>
+          </aside>
 
-        <div className="listing__content">{renderContent()}</div>
+          <div className="listing__content">
+            {loading && <Loading text="Carregando produtos..." />}
+            {error && <ErrorMessage text="Não foi possível carregar os produtos." onRetry={retry} />}
+            {!loading && !error && (result.length ? (
+              <ProductListing products={result} columns={3} />
+            ) : (
+              <p className="listing__empty">Nenhum produto encontrado.</p>
+            ))}
+          </div>
+        </div>
       </div>
     </Layout>
   );
