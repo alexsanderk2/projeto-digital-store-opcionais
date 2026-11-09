@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="600" height="600">
+  <defs>
+    <linearGradient id="band" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e5468f"/>
+      <stop offset="1" stop-color="#a3175a"/>
+    </linearGradient>
+    <linearGradient id="cup" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f0f0f0"/>
+      <stop offset="1" stop-color="#bdbdbd"/>
+    </linearGradient>
+    <linearGradient id="pad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#2e2e2e"/>
+      <stop offset="1" stop-color="#121212"/>
+    </linearGradient>
+    <radialGradient id="floor" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#000" stop-opacity="0.2"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <ellipse cx="300" cy="540" rx="200" ry="20" fill="url(#floor)"/>
+  <!-- arco -->
+  <path d="M118 330 C110 170 200 78 300 78 C400 78 490 170 482 330" fill="none" stroke="url(#band)" stroke-width="34" stroke-linecap="round"/>
+  <path d="M146 320 C142 190 214 112 300 112 C386 112 458 190 454 320" fill="none" stroke="#1d1d1d" stroke-width="14" stroke-linecap="round"/>
+  <!-- hastes -->
+  <rect x="104" y="300" width="28" height="70" rx="12" fill="#9e9e9e"/>
+  <rect x="468" y="300" width="28" height="70" rx="12" fill="#9e9e9e"/>
+  <!-- concha esquerda -->
+  <g>
+    <rect x="62" y="340" width="120" height="170" rx="58" fill="url(#cup)" stroke="#a8a8a8" stroke-width="3"/>
+    <rect x="150" y="352" width="44" height="146" rx="22" fill="url(#pad)"/>
+    <circle cx="116" cy="425" r="26" fill="#c92071"/>
+    <path d="M106 414 L118 425 L106 436" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <!-- concha direita -->
+  <g>
+    <rect x="418" y="340" width="120" height="170" rx="58" fill="url(#cup)" stroke="#a8a8a8" stroke-width="3"/>
+    <rect x="406" y="352" width="44" height="146" rx="22" fill="url(#pad)"/>
+    <circle cx="484" cy="425" r="26" fill="#c92071"/>
+    <path d="M474 414 L486 425 L474 436" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <!-- brilhos -->
+  <path d="M84 380 C84 362 96 352 110 350" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round" opacity="0.8"/>
+  <path d="M440 380 C440 362 452 352 466 350" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round" opacity="0.8"/>
+  <path d="M200 120 C230 100 262 92 290 90" fill="none" stroke="#fff" stroke-opacity="0.35" stroke-width="8" stroke-linecap="round"/>
+</svg>
