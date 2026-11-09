@@ -5,21 +5,54 @@ import BuyBox from '../../components/BuyBox/BuyBox';
 import ProductOptions from '../../components/ProductOptions/ProductOptions';
 import Section from '../../components/Section/Section';
 import ProductListing from '../../components/ProductListing/ProductListing';
-import { products } from '../../data/products';
+import { Loading, ErrorMessage } from '../../components/Status/Status';
+import useFetch from '../../hooks/useFetch';
+import { getProduct, getRelatedProducts } from '../../services/api';
 import './ProductViewPage.css';
 
-const productImages = Array.from({ length: 5 }, (_, i) => ({ src: `/product-image-${i + 1}.jpeg` }));
+const SIZES = {
+  'mens-shoes': ['39', '40', '41', '42', '43'],
+  'womens-shoes': ['34', '35', '36', '37', '38'],
+  'mens-shirts': ['P', 'M', 'G', 'GG'],
+  tops: ['P', 'M', 'G', 'GG'],
+};
+
+const COLORS = ['#6FEEFF', '#FF6969', '#5E5E5E', '#6D70B7'];
 
 const ProductViewPage = () => {
   const { id } = useParams();
-  const product = products.find((p) => String(p.id) === id) ?? products[0];
-  const recommended = products.filter((p) => p.id !== product.id).slice(0, 4);
+
+  const { data, loading, error, retry } = useFetch(
+    async (signal) => {
+      const product = await getProduct(id, signal);
+      const related = await getRelatedProducts(product, signal);
+      return { product, related };
+    },
+    [id]
+  );
+
+  if (loading || error || !data) {
+    return (
+      <Layout>
+        <div className="container">
+          {error ? (
+            <ErrorMessage text="Não foi possível carregar o produto." onRetry={retry} />
+          ) : (
+            <Loading text="Carregando produto..." />
+          )}
+        </div>
+      </Layout>
+    );
+  }
+
+  const { product, related } = data;
+  const sizes = SIZES[product.categorySlug];
 
   return (
     <Layout>
       <div className="container">
         <p className="product-view__breadcrumb">
-          <Link to="/">Home</Link> / <Link to="/products">Produtos</Link> / {product.brand} /{' '}
+          <Link to="/">Home</Link> / <Link to="/products">Produtos</Link> / {product.category} /{' '}
           <strong>{product.name}</strong>
         </p>
 
@@ -27,35 +60,38 @@ const ProductViewPage = () => {
           <Gallery
             key={product.id}
             className="product-view__gallery"
-            images={productImages}
+            images={product.images.map((src) => ({ src }))}
             showThumbs
             width="700"
             height="570"
             radius="4px"
+            fit="contain"
           />
 
           <BuyBox
             name={product.name}
-            reference={`Casual | ${product.brand} | ${product.reference}`}
+            reference={`${product.category} | ${product.brand} | REF: ${product.reference}`}
             stars={product.stars}
             rating={product.rating}
             price={product.price}
             priceDiscount={product.priceDiscount}
             description={product.description}
           >
-            <div>
-              <h4 className="product-view__option-title">Tamanho</h4>
-              <ProductOptions options={['39', '40', '41', '42', '43']} radius="4px" shape="square" type="text" />
-            </div>
+            {sizes && (
+              <div>
+                <h4 className="product-view__option-title">Tamanho</h4>
+                <ProductOptions options={sizes} radius="4px" shape="square" type="text" />
+              </div>
+            )}
             <div>
               <h4 className="product-view__option-title">Cor</h4>
-              <ProductOptions options={['#6FEEFF', '#FF6969', '#5E5E5E', '#6D70B7']} shape="circle" type="color" />
+              <ProductOptions options={COLORS} shape="circle" type="color" />
             </div>
           </BuyBox>
         </div>
 
         <Section title="Produtos recomendados" titleAlign="left" link={{ text: 'Ver todos', href: '/products' }}>
-          <ProductListing products={recommended} />
+          <ProductListing products={related} />
         </Section>
       </div>
     </Layout>
