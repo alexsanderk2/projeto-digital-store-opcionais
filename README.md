@@ -31,8 +31,6 @@ Categorias usadas: `mens-shoes`, `womens-shoes`, `mens-shirts`, `tops`, `womens-
 Detalhes da implementação:
 
 - `src/services/api.js` faz as requisições e converte os dados da API para o formato usado pelos componentes (nome, imagem, preço, desconto, marca, categoria etc.).
-- Os preços da API estão em dólar e são convertidos para real com cotação fixa de **R$ 5,50**.
-- O desconto só é exibido quando a API informa 10% ou mais.
 - `src/hooks/useFetch.js` controla carregamento, erro e cancelamento das requisições (`AbortController`).
 - Enquanto carrega, as páginas mostram um indicador; em caso de erro, exibem uma mensagem com o botão **Tentar novamente**.
 - As opções dos filtros são montadas a partir dos próprios produtos retornados.
