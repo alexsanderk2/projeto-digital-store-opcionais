@@ -19,29 +19,30 @@ const icons = {
       <path d="M17 7l-9 5 3 8 5-2v23h16V18l5 2 3-8-9-5c-1 3-4 5-7 5s-6-2-7-5z" />
     </svg>
   ),
-  dress: (
+  pants: (
     <svg {...svgProps}>
-      <path d="M19 5v7l-3 6 4 4-8 20h24l-8-20 4-4-3-6V5" />
-      <path d="M19 12h10" />
+      <path d="M14 6h20l3 36h-9l-4-24-4 24h-9l3-36z" />
+      <path d="M14 11h20M24 11v7M18 11c0 3-1 5-3 6M30 11c0 3 1 5 3 6" />
+    </svg>
+  ),
+  cap: (
+    <svg {...svgProps}>
+      <path d="M7 31c-1-10 6-18 17-18 9 0 15 6 15 15" />
+      <path d="M7 31c8-3 20-4 32-3 3 0 5 2 4 4-1 1-3 2-6 2-10 0-20-1-30-3z" />
+      <path d="M24 13v-2M24 13c-3 4-4 10-4 16" />
+    </svg>
+  ),
+  headphones: (
+    <svg {...svgProps}>
+      <path d="M9 30v-6a15 15 0 0130 0v6" />
+      <rect x="6" y="28" width="9" height="13" rx="4" />
+      <rect x="33" y="28" width="9" height="13" rx="4" />
     </svg>
   ),
   shoe: (
     <svg {...svgProps}>
       <path d="M5 33v-6c0-2 1-3 3-3 4 0 7-3 9-7l3 2c2 1 4 1 6 0l2 4c3 4 9 6 14 6 1 0 2 1 2 2v2c0 1-1 2-2 2H7c-1 0-2-1-2-2z" />
       <path d="M5 38h38M21 25l3 2M18 28l3 2" />
-    </svg>
-  ),
-  bag: (
-    <svg {...svgProps}>
-      <path d="M9 16h30l-3 26H12L9 16z" />
-      <path d="M17 20v-8a7 7 0 0114 0v8" />
-    </svg>
-  ),
-  glasses: (
-    <svg {...svgProps}>
-      <circle cx="14" cy="28" r="8" />
-      <circle cx="34" cy="28" r="8" />
-      <path d="M22 27c1-1 3-1 4 0M6 26L9 15M42 26l-3-11" />
     </svg>
   ),
 };

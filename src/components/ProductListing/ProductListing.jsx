@@ -9,7 +9,7 @@ const ProductListing = ({ products = [], columns = 4 }) => {
           key={product.id ?? index}
           id={product.id}
           image={product.image}
-          category={product.category}
+          category={product.type ?? product.category}
           name={product.name}
           price={product.price}
           priceDiscount={product.priceDiscount}

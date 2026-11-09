@@ -11,10 +11,10 @@ import { getProduct, getRelatedProducts } from '../../services/api';
 import './ProductViewPage.css';
 
 const SIZES = {
-  'mens-shoes': ['39', '40', '41', '42', '43'],
-  'womens-shoes': ['34', '35', '36', '37', '38'],
-  'mens-shirts': ['P', 'M', 'G', 'GG'],
-  tops: ['P', 'M', 'G', 'GG'],
+  Tênis: ['39', '40', '41', '42', '43'],
+  Camisetas: ['P', 'M', 'G', 'GG'],
+  Calças: ['38', '40', '42', '44', '46'],
+  Bonés: ['Único'],
 };
 
 const COLORS = ['#6FEEFF', '#FF6969', '#5E5E5E', '#6D70B7'];
@@ -49,20 +49,22 @@ const ProductViewPage = () => {
   }
 
   const { product, related } = data;
-  const sizes = SIZES[product.categorySlug];
+  const sizes = SIZES[product.type];
+  const isPhoto = product.images.every((src) => /\.jpe?g$/i.test(src));
 
   return (
     <Layout>
       <div className="container">
         <p className="product-view__breadcrumb">
-          <Link to="/"><strong>Home</strong></Link> / <Link to="/products">Produtos</Link> / {product.category} /{' '}
+          <Link to="/"><strong>Home</strong></Link> / <Link to="/products">Produtos</Link> /{' '}
+          <Link to={`/products?filter=${encodeURIComponent(product.type)}`}>{product.type}</Link> / {product.brand} /{' '}
           {product.name}
         </p>
 
         <div className="product-view">
           <Gallery
             key={product.id}
-            className="product-view__gallery"
+            className={`product-view__gallery ${isPhoto ? 'product-view__gallery--photo' : ''}`}
             images={product.images.map((src, i) => ({
               src,
               background: IMAGE_BACKGROUNDS[i % IMAGE_BACKGROUNDS.length],
@@ -71,12 +73,12 @@ const ProductViewPage = () => {
             width="700"
             height="570"
             radius="4px"
-            fit="contain"
+            fit={isPhoto ? 'cover' : 'contain'}
           />
 
           <BuyBox
             name={product.name}
-            reference={`${product.category} | ${product.brand} | REF: ${product.reference}`}
+            reference={`${product.category} | ${product.brand} | REF:${product.reference}`}
             stars={product.stars}
             rating={product.rating}
             price={product.price}

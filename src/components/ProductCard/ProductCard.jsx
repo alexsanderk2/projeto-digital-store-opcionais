@@ -4,9 +4,11 @@ import './ProductCard.css';
 
 const ProductCard = ({ id, image, category, name, price, priceDiscount }) => {
   const hasDiscount = priceDiscount !== undefined && priceDiscount !== null;
+  // Fotos (JPEG) preenchem o card; imagens com fundo transparente ficam inteiras
+  const isPhoto = /\.jpe?g$/i.test(image);
   const content = (
     <>
-      <div className="product-card__image">
+      <div className={`product-card__image ${isPhoto ? 'product-card__image--photo' : ''}`}>
         {hasDiscount && (
           <span className="product-card__tag">
             {Math.round((1 - priceDiscount / price) * 100)}% OFF

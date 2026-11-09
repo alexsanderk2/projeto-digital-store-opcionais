@@ -22,7 +22,7 @@ const SORTERS = {
 const uniqueOptions = (products, key) =>
   [...new Set(products.map((p) => p[key]))].sort((a, b) => a.localeCompare(b)).map((text) => ({ text }));
 
-const initialFilters = { brand: [], category: [], gender: [], availability: [] };
+const initialFilters = { brand: [], category: [], gender: [], state: [] };
 
 const FilterIcon = () => (
   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -51,7 +51,7 @@ const ProductListingPage = () => {
       brand: uniqueOptions(list, 'brand'),
       category: uniqueOptions(list, 'category'),
       gender: uniqueOptions(list, 'gender'),
-      availability: uniqueOptions(list, 'availability'),
+      state: uniqueOptions(list, 'state'),
     };
   }, [products]);
 
@@ -66,7 +66,7 @@ const ProductListingPage = () => {
   const result = useMemo(() => {
     const term = normalize(search);
     const filtered = (products ?? []).filter((product) => {
-      const haystack = normalize(`${product.name} ${product.brand} ${product.category}`);
+      const haystack = normalize(`${product.name} ${product.type} ${product.brand} ${product.category}`);
       if (term && !haystack.includes(term)) return false;
       return Object.entries(filters).every(
         ([key, values]) => values.length === 0 || values.includes(product[key])
@@ -154,11 +154,11 @@ const ProductListingPage = () => {
               onChange={toggle('gender', 'checkbox')}
             />
             <FilterGroup
-              title="Disponibilidade"
+              title="Estado"
               inputType="radio"
-              options={options.availability}
-              selected={filters.availability}
-              onChange={toggle('availability', 'radio')}
+              options={options.state}
+              selected={filters.state}
+              onChange={toggle('state', 'radio')}
             />
             <button type="button" className="listing__clear" onClick={() => setFilters(initialFilters)}>
               Limpar filtros

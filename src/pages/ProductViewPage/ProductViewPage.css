@@ -29,6 +29,11 @@
   padding: 8px;
 }
 
+.product-view__gallery--photo .gallery__image,
+.product-view__gallery--photo .gallery__thumb img {
+  padding: 0 !important;
+}
+
 @media (max-width: 1024px) {
   .product-view {
     grid-template-columns: minmax(0, 1fr);

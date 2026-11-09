@@ -19,7 +19,7 @@ const slides = [
     description: 'Consequat culpa exercitation mollit nisi excepteur do do tempor laboris eiusmod irure consectetur.',
     image: `${CDN}/nike-air-jordan-1-red-and-black/2.webp`,
     alt: 'Tênis Nike Air Jordan 1 vermelho e preto',
-    link: '/product/88',
+    link: '/products?filter=Nike',
   },
   {
     subtitle: 'Lançamento',
@@ -27,7 +27,7 @@ const slides = [
     description: 'Estilo urbano com conforto para o dia a dia. Garanta já o seu antes que acabe.',
     image: `${CDN}/sports-sneakers-off-white-&-red/1.webp`,
     alt: 'Tênis Off White branco e vermelho',
-    link: '/product/91',
+    link: '/products?filter=Casual',
   },
   {
     subtitle: 'Mais vendidos',
@@ -35,30 +35,30 @@ const slides = [
     description: 'Cores vibrantes e leveza para acompanhar o seu ritmo, do treino ao passeio.',
     image: `${CDN}/puma-future-rider-trainers/2.webp`,
     alt: 'Tênis Puma Future Rider colorido',
-    link: '/product/90',
+    link: '/products?filter=Puma',
   },
   {
     subtitle: 'Esporte',
     title: 'Pronto para o jogo ⚾',
-    description: 'Aderência e estabilidade para quem não para. Confira as chuteiras Nike.',
+    description: 'Aderência e estabilidade para quem não para. Confira os modelos para esporte e lazer.',
     image: `${CDN}/nike-baseball-cleats/2.webp`,
     alt: 'Chuteira Nike branca e verde',
-    link: '/product/89',
+    link: '/products?filter=Esporte',
   },
 ];
 
 const collections = [
-  { image: '/collection-1.png', alt: 'Novo drop Supreme', discount: '30% OFF', link: '/products?filter=Camisas' },
-  { image: '/collection-2.png', alt: 'Coleção Adidas', discount: '30% OFF', link: '/products?filter=Calçados' },
-  { image: '/collection-3.png', alt: 'Novo Beats Bass', discount: '30% OFF', link: '/products' },
+  { image: '/collection-1.png', alt: 'Novo drop Supreme', discount: '30% OFF', link: '/products?filter=Camisetas' },
+  { image: '/collection-2.png', alt: 'Coleção Adidas', discount: '30% OFF', link: '/products?filter=Adidas' },
+  { image: '/collection-3.png', alt: 'Novo Beats Bass', discount: '30% OFF', link: '/products?filter=Headphones' },
 ];
 
 const categories = [
-  { label: 'Camisas', icon: 'shirt', link: '/products?filter=Camisas' },
-  { label: 'Vestidos', icon: 'dress', link: '/products?filter=Vestidos' },
-  { label: 'Calçados', icon: 'shoe', link: '/products?filter=Calçados' },
-  { label: 'Bolsas', icon: 'bag', link: '/products?filter=Bolsas' },
-  { label: 'Óculos', icon: 'glasses', link: '/products?filter=Óculos' },
+  { label: 'Camisetas', icon: 'shirt', link: '/products?filter=Camisetas' },
+  { label: 'Calças', icon: 'pants', link: '/products?filter=Calças' },
+  { label: 'Bonés', icon: 'cap', link: '/products?filter=Bonés' },
+  { label: 'Headphones', icon: 'headphones', link: '/products?filter=Headphones' },
+  { label: 'Tênis', icon: 'shoe', link: '/products?filter=Tênis' },
 ];
 
 const HomePage = () => {
@@ -94,7 +94,7 @@ const HomePage = () => {
           description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip."
           image={`${CDN}/nike-air-jordan-1-red-and-black/4.webp`}
           alt="Tênis Nike Air Jordan 1 edição de colecionador"
-          link="/product/88"
+          link="/products?filter=Jordan"
         />
       </div>
     </Layout>
