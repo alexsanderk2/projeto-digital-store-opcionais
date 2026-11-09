@@ -14,23 +14,30 @@ Esta versão parte da entrega principal ([alexsanderk2/projeto-digital-store](ht
 | README                  | Este documento, com instruções para rodar, rotas, estrutura e detalhes da API. |
 | Pull Request            | As alterações deste README foram integradas via Pull Request. |
 | Funcionalidades visuais | Ordenar e Filtrar funcionam de verdade: ordenação por preço e filtros por marca, categoria, gênero e disponibilidade. |
-| API                     | Os produtos vêm da [DummyJSON](https://dummyjson.com/docs/products) em tempo real. |
+| API                     | Os produtos vêm de uma API própria (`/api/products`), publicada como funções na Vercel. |
 
 ## API
 
-Os produtos são carregados da API pública [DummyJSON](https://dummyjson.com), sem necessidade de chave.
+A loja consome uma API própria, criada na pasta `api/` e publicada como funções (serverless) na Vercel. No `npm run dev` e no `npm run preview`, um plugin do Vite serve as mesmas rotas, então não é preciso rodar nada além do Vite.
 
 | Uso                     | Endpoint |
 | ----------------------- | -------- |
-| Listagem e Home         | `GET /products/category/{categoria}` para cada categoria da loja |
-| Página do produto       | `GET /products/{id}` |
-| Produtos recomendados   | `GET /products/category/{categoria do produto}` |
+| Listagem e Home         | `GET /api/products` |
+| Filtros opcionais       | `GET /api/products?type=Tênis&q=nike&exclude=3&limit=4` |
+| Página do produto       | `GET /api/products/{id}` (404 se não existir) |
+| Produtos relacionados   | `GET /api/products?type={tipo}&exclude={id}&limit=4` |
 
-Categorias usadas: `mens-shoes`, `womens-shoes`, `mens-shirts`, `tops`, `womens-bags` e `sunglasses` (30 produtos no total).
+O catálogo (`api/_catalog.js`) tem 25 produtos nos tipos do layout do Figma: **Camisetas, Calças, Bonés, Headphones e Tênis**, com marca, categoria (Casual, Corrida, Esporte e lazer, Utilitário), gênero e estado (Novo/Usado), os mesmos filtros da página de listagem.
 
-Detalhes da implementação:
+Imagens dos produtos:
 
-- `src/services/api.js` faz as requisições e converte os dados da API para o formato usado pelos componentes (nome, imagem, preço, desconto, marca, categoria etc.).
+- **Tênis:** fotos do próprio projeto (`public/product-thumb-*` e `public/product-image-*`).
+- **Calças, Bonés e Headphones:** ilustrações em SVG criadas para o projeto (`public/catalogo/`).
+- **Camisetas, um headphone e os tênis do banner da Home:** imagens da CDN da [DummyJSON](https://dummyjson.com).
+
+Detalhes da implementação no front-end:
+
+- `src/services/api.js` faz as requisições para a API.
 - `src/hooks/useFetch.js` controla carregamento, erro e cancelamento das requisições (`AbortController`).
 - Enquanto carrega, as páginas mostram um indicador; em caso de erro, exibem uma mensagem com o botão **Tentar novamente**.
 - As opções dos filtros são montadas a partir dos próprios produtos retornados.
@@ -40,7 +47,7 @@ Detalhes da implementação:
 - [React 18](https://react.dev/)
 - [Vite](https://vitejs.dev/)
 - [React Router DOM](https://reactrouter.com/)
-- [DummyJSON](https://dummyjson.com/) (API de produtos)
+- Vercel Functions (API própria de produtos)
 - [Vercel](https://vercel.com/) (deploy)
 - CSS puro com variáveis (paleta de cores do projeto)
 
@@ -71,20 +78,31 @@ Outros scripts:
 ## Estrutura
 
 ```
+api/                        # API própria (funções da Vercel)
+├── _catalog.js             # Catálogo de produtos e funções de busca
+└── products/
+    ├── index.js            # GET /api/products
+    └── [id].js             # GET /api/products/:id
+public/
+└── catalogo/               # Ilustrações SVG (calça, boné, headphone)
 src/
 ├── assets/                 # SVGs (logos, ícones, setas)
 ├── components/
 │   ├── BuyBox/
+│   ├── CategoryIcons/      # Ícones de categorias da Home
+│   ├── CollectionCards/    # Cards das coleções em destaque
 │   ├── FilterGroup/
 │   ├── Footer/
 │   ├── FooterInformations/
 │   ├── Gallery/
-│   ├── Header/
+│   ├── Header/             # Inclui menu hambúrguer e busca do celular
+│   ├── HeroBanner/         # Banner principal da Home
 │   ├── Logo/
 │   ├── ProductCard/
 │   ├── ProductListing/
 │   ├── ProductOptions/
 │   ├── Section/
+│   ├── SpecialOffer/       # Bloco "Oferta especial"
 │   └── Status/             # Carregando / erro
 ├── hooks/                  # useFetch
 ├── pages/
@@ -101,12 +119,15 @@ src/
 
 ## Funcionalidades
 
-- **Header** com logo, campo de busca (Enter ou clique na lupa redireciona para `/products?filter=...`), links *Cadastre-se* / *Entrar*, carrinho e navegação com destaque do link ativo (`NavLink`).
+Layout baseado no Figma do projeto, nas versões desktop e celular.
+
+- **Header** com logo, campo de busca (Enter ou clique na lupa redireciona para `/products?filter=...`), links *Cadastre-se* / *Entrar*, carrinho e navegação com destaque do link ativo (`NavLink`). No celular, menu hambúrguer com gaveta lateral e busca que abre pelo ícone.
+- **Home** com banner rotativo, coleções em destaque, ícones de categorias, produtos em alta e bloco de oferta especial.
 - **Footer** com logo branca, redes sociais e colunas de informações renderizadas dinamicamente.
 - **Gallery** com setas (desabilitadas no início/fim), animação de deslize e miniaturas opcionais (`showThumbs`).
 - **Section**, **ProductCard** e **ProductListing** reutilizáveis.
-- **Listagem de produtos** com ordenação por menor/maior preço e filtros por marca, categoria, gênero e estado; o título mostra o total de produtos encontrados.
-- **Visualização do produto** com galeria, BuyBox, opções de tamanho/cor (`ProductOptions`) e produtos recomendados.
+- **Listagem de produtos** com ordenação (mais relevantes, menor e maior preço) e filtros por marca, categoria, gênero e estado. No celular, os filtros abrem numa gaveta.
+- **Visualização do produto** com galeria, BuyBox, opções de tamanho/cor (`ProductOptions`) e produtos relacionados.
 
 ## Paleta de cores
 
