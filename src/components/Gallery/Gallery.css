@@ -67,6 +67,10 @@
   overflow: hidden;
 }
 
+.gallery__thumb {
+  background-color: var(--white);
+}
+
 .gallery__thumb img {
   width: 100%;
   height: 100%;

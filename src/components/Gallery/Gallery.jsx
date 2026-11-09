@@ -8,7 +8,7 @@ const toPx = (value) => {
   return /^\d+(\.\d+)?$/.test(String(value)) ? `${value}px` : String(value);
 };
 
-const Gallery = ({ className = '', width, height, radius, showThumbs = false, images = [] }) => {
+const Gallery = ({ className = '', width, height, radius, showThumbs = false, images = [], fit = 'cover' }) => {
   const [current, setCurrent] = useState(0);
 
   const isFirst = current === 0;
@@ -38,6 +38,7 @@ const Gallery = ({ className = '', width, height, radius, showThumbs = false, im
               src={image.src}
               alt={`Imagem ${index + 1}`}
               className="gallery__image"
+              style={{ objectFit: fit }}
               aria-hidden={index !== current}
             />
           ))}
@@ -74,7 +75,7 @@ const Gallery = ({ className = '', width, height, radius, showThumbs = false, im
               onClick={() => setCurrent(index)}
               aria-label={`Ver imagem ${index + 1}`}
             >
-              <img src={image.src} alt="" style={{ borderRadius: r }} />
+              <img src={image.src} alt="" style={{ borderRadius: r, objectFit: fit }} />
             </button>
           ))}
         </div>
