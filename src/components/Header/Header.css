@@ -107,6 +107,7 @@
 
 .header__link {
   position: relative;
+  white-space: nowrap;
   font-size: 16px;
   color: var(--dark-gray-2);
   padding-bottom: 6px;

@@ -46,8 +46,10 @@
 
 .product-card__prices {
   display: flex;
-  align-items: center;
-  gap: 10px;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 10px;
+  row-gap: 2px;
 }
 
 .product-card__price {
@@ -60,4 +62,25 @@
   color: var(--light-gray);
   font-weight: 400;
   text-decoration: line-through;
+}
+
+@media (max-width: 600px) {
+  .product-card__name {
+    font-size: 15px;
+  }
+
+  .product-card__price {
+    font-size: 18px;
+  }
+
+  .product-card__price--old {
+    font-size: 14px;
+  }
+
+  .product-card__tag {
+    top: 8px;
+    left: 8px;
+    font-size: 12px;
+    padding: 3px 10px;
+  }
 }
