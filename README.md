@@ -4,7 +4,7 @@ Projeto de e-commerce **Drip Store / Digital Store** desenvolvido em React como 
 
 Esta versão parte da entrega principal ([alexsanderk2/projeto-digital-store](https://github.com/alexsanderk2/projeto-digital-store)) e adiciona as recomendações opcionais.
 
-**Deploy:** _link em breve_
+**Deploy:** https://projeto-digital-store-opcionais.vercel.app/
 
 ## Opcionais entregues
 
